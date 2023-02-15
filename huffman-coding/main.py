@@ -96,42 +96,6 @@ class Tree:
     def __str__(self) -> str:
         return f"Tree:\n\tleft: {str(self.root_node.left)}\n\tright: {str(self.root_node.right)}"
 
-def climb(tree, trace = "", element = None) -> Optional[tuple[str, str]]:
-    match tree:
-        case Leaf():
-            element = tree.value
-            tree = None
-            return (element, trace)
-        case Node():
-            (_left, _right) = tree.children()
-
-            if tree.left == None and tree.right == None:
-                tree = None
-                print("Returning None")
-                return None
-
-            match _left:
-                case Node():
-                    trace = trace + "0"
-                    return climb(_left.left, trace)
-                case Leaf():
-                    element = _left.value
-                    tree.left = None
-                    return (element, trace)
-                case None:
-                    pass
-
-            match _right:
-                case Node():
-                    trace = trace + "1"
-                    return climb(_right.right, trace)
-                case Leaf():
-                    element = _right.value
-                    tree.right = None
-                    return (element, trace)
-                case None:
-                    pass
-
 def climb(tree, trace="", result=[]):
     (_left, _right) = tree.children()
     left_none, right_none = False, False
@@ -160,10 +124,11 @@ def climb(tree, trace="", result=[]):
         tree = None
 
 def main():
-    input = 'aaaabbbcccdde'
+    input = 'aaaabbbcccddeeeggggggghhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiii'
     tree = Tree(input)
 
     out = []
     climb(tree, result=out)
     print(out)
+
 main()
