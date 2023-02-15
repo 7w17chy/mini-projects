@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Optional
 
 class TreeNodeTraits(ABC):
     @abstractmethod
@@ -93,8 +94,9 @@ class Tree:
         return self.root_node.children()
 
     def __str__(self) -> str:
+        return f"Tree:\n\tleft: {str(self.root_node.left)}\n\tright: {str(self.root_node.right)}"
 
-def climb(tree, trace = "", element = None) -> tuple[str, str]:
+def climb(tree, trace = "", element = None) -> Optional[tuple[str, str]]:
     match tree:
         case Leaf():
             element = tree.value
@@ -103,10 +105,15 @@ def climb(tree, trace = "", element = None) -> tuple[str, str]:
         case Node():
             (_left, _right) = tree.children()
 
+            if tree.left == None and tree.right == None:
+                tree = None
+                print("Returning None")
+                return None
+
             match _left:
                 case Node():
                     trace = trace + "0"
-                    return climb(_left.left, result = ("", trace))
+                    return climb(_left.left, trace)
                 case Leaf():
                     element = _left.value
                     tree.left = None
@@ -117,7 +124,7 @@ def climb(tree, trace = "", element = None) -> tuple[str, str]:
             match _right:
                 case Node():
                     trace = trace + "1"
-                    return climb(_right.right, result = ("", trace))
+                    return climb(_right.right, trace)
                 case Leaf():
                     element = _right.value
                     tree.right = None
@@ -125,30 +132,38 @@ def climb(tree, trace = "", element = None) -> tuple[str, str]:
                 case None:
                     pass
 
-            if tree.left == None and tree.right == None:
-                tree = None
+def climb(tree, trace="", result=[]):
+    (_left, _right) = tree.children()
+    left_none, right_none = False, False
 
-    return result
+    match _left:
+        case Leaf():
+            result.append((_left.value, trace))
+            tree = None
+        case Node():
+            new_trace = trace + "0"
+            climb(_left, new_trace, result)
+        case None:
+            left_none = True
 
-def tree_to_table(tree) -> dict[str, str]:
-    work_queue = list(tree.occurences)
-    result = dict()
+    match _right:
+        case Leaf():
+            result.append((_right.value, trace))
+            tree = None
+        case Node():
+            new_trace = trace + "1"
+            climb(_right, new_trace, result)
+        case None:
+            right_none = True
 
-    while work_queue:
-        (element, trace) = climb(tree)
-        result[element] = trace
-
-        if not element in work_queue:
-            print(f"Atempting to remove element `${element}` which is not in work_queue")
-        work_queue.remove(element)
-
-    return result
-        return f"Tree:\n\tleft: {str(self.root_node.left)}\n\tright: {str(self.root_node.right)}"
+    if left_none and right_none:
+        tree = None
 
 def main():
     input = 'aaaabbbcccdde'
     tree = Tree(input)
-#    table = tree_to_table(tree)
-    print(str(tree))
 
+    out = []
+    climb(tree, result=out)
+    print(out)
 main()
