@@ -95,55 +95,55 @@ class Tree:
     def __str__(self) -> str:
         return f"Tree:\n\tleft: ${str(self.root_node.left)}\n\tright: ${str(self.root_node.right)}"
 
-#def climb(tree, trace = "", element = None) -> tuple[str, str]:
-#    match tree:
-#        case Leaf():
-#            element = tree.value
-#            tree = None
-#            return (element, trace)
-#        case Node():
-#            (_left, _right) = tree.children()
-#
-#            match _left:
-#                case Node():
-#                    trace = trace + "0"
-#                    return climb(_left.left, result = ("", trace))
-#                case Leaf():
-#                    element = _left.value
-#                    tree.left = None
-#                    return (element, trace)
-#                case None:
-#                    pass
-#
-#            match _right:
-#                case Node():
-#                    trace = trace + "1"
-#                    return climb(_right.right, result = ("", trace))
-#                case Leaf():
-#                    element = _right.value
-#                    tree.right = None
-#                    return (element, trace)
-#                case None:
-#                    pass
-#
-#            if tree.left == None and tree.right == None:
-#                tree = None
-#
-#    return result
+def climb(tree, trace = "", element = None) -> tuple[str, str]:
+    match tree:
+        case Leaf():
+            element = tree.value
+            tree = None
+            return (element, trace)
+        case Node():
+            (_left, _right) = tree.children()
 
-#def tree_to_table(tree) -> dict[str, str]:
-#    work_queue = list(tree.occurences)
-#    result = dict()
-#
-#    while work_queue:
-#        (element, trace) = climb(tree)
-#        result[element] = trace
-#
-#        if not element in work_queue:
-#            print(f"Atempting to remove element `${element}` which is not in work_queue")
-#        work_queue.remove(element)
-#
-#    return result
+            match _left:
+                case Node():
+                    trace = trace + "0"
+                    return climb(_left.left, result = ("", trace))
+                case Leaf():
+                    element = _left.value
+                    tree.left = None
+                    return (element, trace)
+                case None:
+                    pass
+
+            match _right:
+                case Node():
+                    trace = trace + "1"
+                    return climb(_right.right, result = ("", trace))
+                case Leaf():
+                    element = _right.value
+                    tree.right = None
+                    return (element, trace)
+                case None:
+                    pass
+
+            if tree.left == None and tree.right == None:
+                tree = None
+
+    return result
+
+def tree_to_table(tree) -> dict[str, str]:
+    work_queue = list(tree.occurences)
+    result = dict()
+
+    while work_queue:
+        (element, trace) = climb(tree)
+        result[element] = trace
+
+        if not element in work_queue:
+            print(f"Atempting to remove element `${element}` which is not in work_queue")
+        work_queue.remove(element)
+
+    return result
 
 def main():
     input = 'aaaabbbcccdde'
