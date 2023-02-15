@@ -93,7 +93,6 @@ class Tree:
         return self.root_node.children()
 
     def __str__(self) -> str:
-        return f"Tree:\n\tleft: ${str(self.root_node.left)}\n\tright: ${str(self.root_node.right)}"
 
 def climb(tree, trace = "", element = None) -> tuple[str, str]:
     match tree:
@@ -144,6 +143,7 @@ def tree_to_table(tree) -> dict[str, str]:
         work_queue.remove(element)
 
     return result
+        return f"Tree:\n\tleft: {str(self.root_node.left)}\n\tright: {str(self.root_node.right)}"
 
 def main():
     input = 'aaaabbbcccdde'
