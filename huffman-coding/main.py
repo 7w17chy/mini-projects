@@ -67,7 +67,7 @@ def tree_from_list(occurence_list: list[TreeNodeTraits]) -> Node:
         left, right = occurence_list
         return Node(left, right)
 
-def count_occurences(input) -> list[TreeNodeTraits]:
+def count_occurences(input) -> dict[str, int]:
     occurence_count = dict()
     for element in input:
         if element in occurence_count:
@@ -75,20 +75,24 @@ def count_occurences(input) -> list[TreeNodeTraits]:
         else:
             occurence_count[element] = 0
 
-    result: list[TreeNodeTraits] = []
-    for element, occurrence in occurence_count.items():
-        new_node = Leaf(element, occurrence)
-        result.append(new_node)
+    return occurence_count
 
-    return result
+def make_leafs(occurrence_map) -> list[TreeNodeTraits]:
+   result: list[TreeNodeTraits] = []
+   for element, occurrence in occurrence_map.items():
+       new_node = Leaf(element, occurrence)
+       result.append(new_node)
+
+   return result
 
 class Tree:
     def __init__(self, input):
         self.occurences = count_occurences(input)
-        self.root_node = tree_from_list(self.occurences.copy())
+        tree_construction_list = make_leafs(self.occurences.copy())
+        self.root_node = tree_from_list(tree_construction_list)
 
-    def to_table(self, work_queue: list[str], result: list[str] = []) -> dict[str, str]:
-        pass
+    def children(self):
+        return self.root_node.children()
 
 def main():
     input = 'aaaabbbcccdde'
