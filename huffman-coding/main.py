@@ -42,7 +42,7 @@ class Node(TreeNodeTraits):
         return self.left.weight() + self.right.weight()
 
     def __str__(self) -> str:
-        return f"[Node, left: {str(self.left)}; right: {str(self.right)}]"
+        return f"[ Node, left: {str(self.left)}; right: {str(self.right)} ]"
 
     def print(self):
         print(str(self))
@@ -124,8 +124,9 @@ def climb(tree, trace="", result=[]):
         tree = None
 
 def main():
-    input = 'aaaabbbcccddeeeggggggghhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiii'
+    input = 'ffdagffzhfaaaabbbcccddeeeggggggghhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiii'
     tree = Tree(input)
+    print(str(tree))
 
     out = []
     climb(tree, result=out)
