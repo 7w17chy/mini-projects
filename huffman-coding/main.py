@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import Optional
 
 class TreeNodeTraits(ABC):
     @abstractmethod
@@ -123,13 +122,26 @@ def climb(tree, trace="", result=[]):
     if left_none and right_none:
         tree = None
 
+def clean_input(input) -> str:
+    result = input.lower()
+    # FIXME: da fehlen noch ein paar
+    result = result.strip("-,!$^:;.?/\\|")
+    return result
+
+def input_from_file(path) -> str:
+    file = open(path)
+    contents = file.read()
+    return clean_input(contents)
+
 def main():
-    input = 'ffdagffzhfaaaabbbcccddeeeggggggghhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiii'
+    input = input_from_file('./res/paragraph1.txt')
     tree = Tree(input)
+
     print(str(tree))
 
     out = []
     climb(tree, result=out)
     print(out)
 
-main()
+if __name__ == "__main__":
+    main()
