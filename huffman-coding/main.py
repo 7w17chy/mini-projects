@@ -54,6 +54,7 @@ class Node(TreeNodeTraits):
 
 def tree_from_list(occurence_list: list[TreeNodeTraits]) -> Node:
     occurence_list = sorted(occurence_list, reverse=True)
+    occurence_list = sorted(occurence_list)
 
     if len(occurence_list) >= 3:
         left, right, *rest = occurence_list
