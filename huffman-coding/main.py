@@ -53,7 +53,6 @@ class Node(TreeNodeTraits):
 
 
 def tree_from_list(occurence_list: list[TreeNodeTraits]) -> Node:
-    occurence_list = sorted(occurence_list, reverse=True)
     occurence_list = sorted(occurence_list)
 
     if len(occurence_list) >= 3:
@@ -137,8 +136,6 @@ def input_from_file(path) -> str:
 def main():
     input = input_from_file('./res/paragraph1.txt')
     tree = Tree(input)
-
-    print(str(tree))
 
     out = []
     climb(tree, result=out)
